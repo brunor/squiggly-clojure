@@ -1,14 +1,14 @@
 (ns squiggly-clojure.core
-  (:require eastwood.lint
-            kibit.check
-            clojure.data.json
-            clojure.core.typed
-            environ.core
+  (:require [eastwood.lint :as eastood]
+            [kibit.check :as kibit]
+            [clojure.data.json :as json]
+            [clojure.core.typed :as typed]
+            [environ.core :as environ]
             ))
 
 (defn env [ns]
   (or (:squiggly (meta (the-ns ns)))
-      (:squiggly environ.core/env)))
+      (clojure.edn/read-string (:squiggly environ.core/env))))
 
 (defn do-lint? [checker ns]
   (and (find-ns ns)
